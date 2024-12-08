@@ -1,145 +1,134 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotina de Medicamentos</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2rem;
-      color: #4CAF50;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 600px;
-    }
-    .time {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #4CAF50;
-      margin-bottom: 15px;
-    }
-    .todo-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      font-size: 1.25rem;
-    }
-    .todo-item button {
-      font-size: 1rem;
-      padding: 10px 15px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .todo-item button:disabled {
-      background-color: #aaa;
-      cursor: not-allowed;
-    }
-    .todo-item.done label {
-      text-decoration: line-through;
-      color: #aaa;
-    }
-    footer {
-      text-align: center;
-      font-size: 1rem;
-      margin-top: 30px;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Remédios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .date-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .remedio-list {
+            list-style: none;
+            padding: 0;
+        }
+        .remedio-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .remedio-item.taken {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .remedio-item.pending {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .remedio-info {
+            font-size: 16px;
+        }
+        .remedio-buttons button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-taken {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .btn-not-taken {
+            background-color: #dc3545;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-  <h1>Rotina de Medicamentos</h1>
+    <div class="container">
+        <h1>Gerenciador de Remédios</h1>
+        <div class="date-selector">
+            <button onclick="changeDate(-1)">← Ontem</button>
+            <span id="current-date">08/12/2024</span>
+            <button onclick="changeDate(1)">Amanhã →</button>
+        </div>
+        <ul class="remedio-list" id="remedio-list">
+            <!-- Os remédios serão adicionados dinamicamente -->
+        </ul>
+    </div>
 
-  <!-- Horário da Manhã -->
-  <div class="card">
-    <div class="time">Manhã (07:00)</div>
-    <div class="todo-item">
-      <label><strong>Carvedilol 6,25 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Hidralazina 25 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Furosemida 40 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Espironolactona 25 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Clopidogrel 75 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Atorvastatina 20 mg</strong> - 2 comprimidos</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-  </div>
+    <script>
+        const remedios = [
+            { id: 1, nome: 'Paracetamol', horario: '08:00', tomado: false },
+            { id: 2, nome: 'Aspirina', horario: '12:00', tomado: true },
+            { id: 3, nome: 'Amoxicilina', horario: '18:00', tomado: false },
+        ];
 
-  <!-- Horário da Tarde -->
-  <div class="card">
-    <div class="time">Tarde (15:00)</div>
-    <div class="todo-item">
-      <label><strong>Hidralazina 25 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Furosemida 40 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Isossorbida 40 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-  </div>
+        const remedioList = document.getElementById('remedio-list');
 
-  <!-- Horário da Noite -->
-  <div class="card">
-    <div class="time">Noite (23:00)</div>
-    <div class="todo-item">
-      <label><strong>Carvedilol 6,25 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Hidralazina 25 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-    <div class="todo-item">
-      <label><strong>Isossorbida 40 mg</strong> - 1 comprimido</label>
-      <button onclick="markDone(this)">Tomado</button>
-    </div>
-  </div>
+        function renderRemedios() {
+            remedioList.innerHTML = '';
+            remedios.forEach(remedio => {
+                const item = document.createElement('li');
+                item.className = `remedio-item ${remedio.tomado ? 'taken' : 'pending'}`;
+                item.innerHTML = `
+                    <div class="remedio-info">
+                        <strong>${remedio.nome}</strong> - ${remedio.horario}
+                    </div>
+                    <div class="remedio-buttons">
+                        <button class="btn-taken" onclick="marcarTomado(${remedio.id}, true)">Tomado</button>
+                        <button class="btn-not-taken" onclick="marcarTomado(${remedio.id}, false)">Não Tomado</button>
+                    </div>
+                `;
+                remedioList.appendChild(item);
+            });
+        }
 
-  <footer>
-    <p>Acompanhe diariamente e consulte seu médico em caso de dúvidas.</p>
-  </footer>
+        function marcarTomado(id, tomado) {
+            const remedio = remedios.find(r => r.id === id);
+            if (remedio) {
+                remedio.tomado = tomado;
+                alert(`Remédio "${remedio.nome}" foi marcado como ${tomado ? 'tomado' : 'não tomado'}.`);
+                renderRemedios();
+                // Aqui você pode fazer uma chamada para o backend para registrar o status
+            }
+        }
 
-  <script>
-    function markDone(button) {
-      const parent = button.parentElement;
-      parent.classList.add('done');
-      button.disabled = true;
-      button.innerText = 'Tomado';
-    }
-  </script>
+        function changeDate(offset) {
+            const currentDate = new Date(document.getElementById('current-date').innerText.split('/').reverse().join('-'));
+            currentDate.setDate(currentDate.getDate() + offset);
+            const newDate = currentDate.toLocaleDateString('pt-BR');
+            document.getElementById('current-date').innerText = newDate;
+            // Aqui você pode buscar os remédios da data nova
+            alert(`Carregando remédios para ${newDate}`);
+        }
+
+        renderRemedios();
+    </script>
 </body>
 </html>
