@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotina de Medicamentos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: #4CAF50;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 600px;
+    }
+    .time {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+    .todo-item button {
+      font-size: 1rem;
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .todo-item button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    .todo-item.done label {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+    footer {
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 30px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rotina de Medicamentos</h1>
+
+  <!-- Horário da Manhã -->
+  <div class="card">
+    <div class="time">Manhã (07:00)</div>
+    <div class="todo-item">
+      <label><strong>Carvedilol 6,25 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Hidralazina 25 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Furosemida 40 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Espironolactona 25 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Clopidogrel 75 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Atorvastatina 20 mg</strong> - 2 comprimidos</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+  </div>
+
+  <!-- Horário da Tarde -->
+  <div class="card">
+    <div class="time">Tarde (15:00)</div>
+    <div class="todo-item">
+      <label><strong>Hidralazina 25 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Furosemida 40 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Isossorbida 40 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+  </div>
+
+  <!-- Horário da Noite -->
+  <div class="card">
+    <div class="time">Noite (23:00)</div>
+    <div class="todo-item">
+      <label><strong>Carvedilol 6,25 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Hidralazina 25 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+    <div class="todo-item">
+      <label><strong>Isossorbida 40 mg</strong> - 1 comprimido</label>
+      <button onclick="markDone(this)">Tomado</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Acompanhe diariamente e consulte seu médico em caso de dúvidas.</p>
+  </footer>
+
+  <script>
+    function markDone(button) {
+      const parent = button.parentElement;
+      parent.classList.add('done');
+      button.disabled = true;
+      button.innerText = 'Tomado';
+    }
+  </script>
+</body>
+</html>
